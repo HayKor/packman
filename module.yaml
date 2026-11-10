@@ -8,5 +8,8 @@ settings:
     serialization: json
 
 dependencies:
+  - $libs.ktor.client.core
+  - $libs.ktor.client.curl
+  - $libs.kotlinx.coroutines.core
   - $libs.kotlinx.io.core
   - $libs.yamlkt

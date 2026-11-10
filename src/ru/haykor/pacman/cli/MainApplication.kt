@@ -1,8 +1,8 @@
 package ru.haykor.pacman.cli
 
+import kotlinx.coroutines.runBlocking
 import ru.haykor.pacman.PacmanException
 import ru.haykor.pacman.config.ConfigLoader
-import ru.haykor.pacman.config.ConfigPrinter
 
 /**
  * Application use case independent from the process environment.
@@ -24,7 +24,7 @@ class MainApplication(
         when (val parsed = ArgumentParser.parse(arguments)) {
             ArgumentsResult.HelpRequested -> showHelp()
             is ArgumentsResult.Invalid -> failUsage(parsed.message)
-            is ArgumentsResult.Parsed -> showConfiguration(parsed.configPath)
+            is ArgumentsResult.Parsed -> execute(parsed.configPath)
         }
 
     private fun showHelp(): ExitCode {
@@ -32,14 +32,12 @@ class MainApplication(
         return ExitCode.SUCCESS
     }
 
-    private fun showConfiguration(configPath: String): ExitCode {
-        val config = try {
-            ConfigLoader().load(configPath)
-        } catch (error: PacmanException) {
-            return fail(error.message ?: UNKNOWN_FAILURE)
-        }
-        ConfigPrinter.render(config).forEach(output::line)
-        return ExitCode.SUCCESS
+    private fun execute(configPath: String): ExitCode = try {
+        val config = ConfigLoader().load(configPath)
+        runBlocking { DirectDependenciesCommand(output).execute(config) }
+        ExitCode.SUCCESS
+    } catch (error: PacmanException) {
+        fail(error.message ?: UNKNOWN_FAILURE)
     }
 
     private fun fail(message: String): ExitCode {

@@ -10,22 +10,24 @@ class MainApplicationTest {
     private val application = MainApplication(output = output, errorOutput = errorOutput)
 
     @Test
-    fun printsConfigurationParameters() {
-        val exitCode = application.run(listOf("--config", "tests/fixtures/configs/registry.yaml"))
-
-        assertEquals(ExitCode.SUCCESS, exitCode)
-        assertEquals(6, output.lines.size)
-        assertEquals("package: express", output.lines.first())
-        assertTrue(errorOutput.lines.isEmpty())
-    }
-
-    @Test
     fun reportsMissingConfigurationFile() {
         val exitCode = application.run(listOf("--config", "tests/fixtures/configs/missing.yaml"))
 
         assertEquals(ExitCode.FAILURE, exitCode)
         assertTrue(output.lines.isEmpty())
         assertTrue(errorOutput.lines.single().startsWith("error: configuration file"))
+    }
+
+    @Test
+    fun reportsTestRepositoryModeAsUnsupported() {
+        val arguments = listOf("--config", "tests/fixtures/configs/test-linear.yaml")
+        val exitCode = application.run(arguments)
+
+        assertEquals(ExitCode.FAILURE, exitCode)
+        assertEquals(
+            "error: repository_mode 'test' is not supported yet",
+            errorOutput.lines.single(),
+        )
     }
 
     @Test
