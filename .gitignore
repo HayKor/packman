@@ -1,0 +1,23 @@
+# Kotlin toolchain build output
+build/
+.kotlin/
+out/
+
+# Native binaries and logs
+*.kexe
+*.log
+
+# Generated graph images
+*.png
+
+# Node.js artifacts used only for comparison demos
+node_modules/
+package-lock.json
+
+# Editor and IDE settings
+.idea/
+.vscode/
+*.iml
+
+# Task statement sources (PDF files must not be committed)
+ref/

@@ -1,0 +1,7 @@
+pacman - dependency graph visualizer for npm packages
+
+Usage: pacman [options]
+
+Options:
+  --config <path>  path to the YAML configuration file (default: config.yaml)
+  -h, --help       show this help page and exit

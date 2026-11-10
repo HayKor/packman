@@ -1,0 +1,12 @@
+product: linux/app
+
+settings:
+  native:
+    entryPoint: ru.haykor.pacman.main
+  kotlin:
+    version: 2.4.20
+    serialization: json
+
+dependencies:
+  - $libs.kotlinx.io.core
+  - $libs.yamlkt

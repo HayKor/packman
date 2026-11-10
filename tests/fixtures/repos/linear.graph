@@ -1,0 +1,4 @@
+# Linear chain: A depends on B, B depends on C.
+A: B
+B: C
+C:
