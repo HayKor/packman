@@ -47,6 +47,25 @@ class ConfigLoaderTest {
     }
 
     @Test
+    fun disablesLoadOrderByDefault() {
+        val config = loader.loadFromText(validRegistryText())
+
+        assertFalse(config.loadOrder)
+    }
+
+    @Test
+    fun readsLoadOrderFlag() {
+        val config = loader.loadFromText(validRegistryText() + "\nload_order: true\n")
+
+        assertTrue(config.loadOrder)
+    }
+
+    @Test
+    fun rejectsInvalidLoadOrderFlag() {
+        assertInvalid("must be a boolean", validRegistryText() + "\nload_order: maybe\n")
+    }
+
+    @Test
     fun acceptsUppercaseBooleanValue() {
         val config = loader.loadFromText(validRegistryText(asciiTree = "TRUE"))
 

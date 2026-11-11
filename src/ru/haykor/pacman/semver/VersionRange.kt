@@ -34,7 +34,7 @@ internal data class VersionComparator(val operator: RangeOperator, val version: 
      * @return `true` when the candidate satisfies the bound.
      */
     fun matches(candidate: SemVer): Boolean = when (operator) {
-        RangeOperator.EQUAL -> candidate.compareTo(version) == 0
+        RangeOperator.EQUAL -> candidate == version
         RangeOperator.GREATER -> candidate > version
         RangeOperator.GREATER_OR_EQUAL -> candidate >= version
         RangeOperator.LESS -> candidate < version
@@ -80,6 +80,8 @@ class VersionRange private constructor(
         private val ANY_TOKENS = setOf("*", "x", "X", "latest")
         private val PREFIX_OPERATORS = setOf(">=", "<=", ">", "<", "=")
         private val UNSUPPORTED_MARKERS = listOf(":", "git+", "file:", "workspace:")
+        private const val STABLE_MAJOR_VERSION: Int = 1
+        private const val STABLE_MINOR_VERSION: Int = 1
 
         /**
          * Parses a version range.
@@ -219,9 +221,9 @@ class VersionRange private constructor(
             val lower = partial.lowest()
             val major = partial.major ?: 0
             val upper = when {
-                major > 0 -> SemVer(major + 1, 0, 0)
+                major >= STABLE_MAJOR_VERSION -> SemVer(major + 1, 0, 0)
                 partial.minor == null -> SemVer(1, 0, 0)
-                partial.minor > 0 -> SemVer(0, partial.minor + 1, 0)
+                partial.minor >= STABLE_MINOR_VERSION -> SemVer(0, partial.minor + 1, 0)
                 partial.patch == null -> SemVer(0, 1, 0)
                 else -> SemVer(0, 0, partial.patch + 1)
             }

@@ -1,0 +1,7 @@
+package: A
+repository: tests/fixtures/repos/cycle.graph
+repository_mode: test
+image_file: graph.png
+ascii_tree: false
+filter: ""
+load_order: true

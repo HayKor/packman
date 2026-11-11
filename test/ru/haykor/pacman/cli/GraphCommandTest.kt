@@ -25,6 +25,19 @@ class GraphCommandTest {
     }
 
     @Test
+    fun printsLoadingOrderWhenRequested() {
+        runBlocking {
+            GraphCommand(output).execute(
+                configFor("tests/fixtures/repos/diamond.graph", filter = "", loadOrder = true),
+            )
+        }
+
+        assertEquals("Loading order for A (dependencies first):", output.lines.first())
+        assertEquals(listOf("  1. D", "  2. B", "  3. C", "  4. A"), output.lines.subList(1, 5))
+        assertEquals("Total: 4 packages", output.lines[5])
+    }
+
+    @Test
     fun reportsFilteredRootPackage() {
         val error = assertFailsWith<ExecutionException> {
             runBlocking {
@@ -44,13 +57,18 @@ class GraphCommandTest {
         }
     }
 
-    private fun configFor(repository: String, filter: String): PacmanConfig = PacmanConfig(
+    private fun configFor(
+        repository: String,
+        filter: String,
+        loadOrder: Boolean = false,
+    ): PacmanConfig = PacmanConfig(
         packageName = "A",
         repository = repository,
         repositoryMode = RepositoryMode.TEST,
         imageFile = "graph.png",
         asciiTree = false,
         filter = filter,
+        loadOrder = loadOrder,
     )
 
     private class RecordingSink : MessageSink {

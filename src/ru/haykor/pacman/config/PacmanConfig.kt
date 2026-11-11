@@ -42,6 +42,7 @@ enum class RepositoryMode(val configValue: String) {
  * @property imageFile name of the generated graph image.
  * @property asciiTree whether dependencies must be printed as an ASCII tree.
  * @property filter substring used to exclude packages from the analysis.
+ * @property loadOrder whether the dependency loading order must be printed.
  */
 data class PacmanConfig(
     val packageName: String,
@@ -50,4 +51,5 @@ data class PacmanConfig(
     val imageFile: String,
     val asciiTree: Boolean,
     val filter: String,
+    val loadOrder: Boolean = false,
 )

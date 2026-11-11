@@ -20,15 +20,15 @@ data class SemVer(
 
     override fun compareTo(other: SemVer): Int {
         val majorResult = major.compareTo(other.major)
-        if (majorResult != 0) {
+        if (majorResult != EQUAL_RESULT) {
             return majorResult
         }
         val minorResult = minor.compareTo(other.minor)
-        if (minorResult != 0) {
+        if (minorResult != EQUAL_RESULT) {
             return minorResult
         }
         val patchResult = patch.compareTo(other.patch)
-        if (patchResult != 0) {
+        if (patchResult != EQUAL_RESULT) {
             return patchResult
         }
         return comparePrerelease(other.prerelease)
@@ -52,7 +52,7 @@ data class SemVer(
         val sharedSize = minOf(prerelease.size, other.size)
         for (index in 0 until sharedSize) {
             val result = compareIdentifier(prerelease[index], other[index])
-            if (result != 0) {
+            if (result != EQUAL_RESULT) {
                 return result
             }
         }
@@ -68,5 +68,9 @@ data class SemVer(
             rightNumber != null -> 1
             else -> left.compareTo(right)
         }
+    }
+
+    private companion object {
+        const val EQUAL_RESULT: Int = 0
     }
 }

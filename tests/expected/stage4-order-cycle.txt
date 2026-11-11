@@ -1,0 +1,7 @@
+Loading order for A (dependencies first):
+  1. C
+  2. B
+  3. A
+Total: 3 packages
+
+Cycles: A -> B -> C -> A

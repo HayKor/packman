@@ -22,6 +22,9 @@ object ConfigKeys {
     /** Substring used to filter packages out. */
     const val FILTER: String = "filter"
 
+    /** Whether the dependency loading order must be printed. */
+    const val LOAD_ORDER: String = "load_order"
+
     /** Every key supported by the loader. */
     val ALL: Set<String> = setOf(
         PACKAGE,
@@ -30,5 +33,6 @@ object ConfigKeys {
         IMAGE_FILE,
         ASCII_TREE,
         FILTER,
+        LOAD_ORDER,
     )
 }

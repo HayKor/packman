@@ -38,7 +38,7 @@ object TestRepositoryParser {
             return
         }
         val separatorIndex = line.indexOf(DECLARATION_SEPARATOR)
-        if (separatorIndex < 0) {
+        if (separatorIndex == NOT_FOUND) {
             throw TestRepositoryException(lineNumber, "expected '<NAME>: <DEPENDENCIES>'")
         }
         val name = line.substring(0, separatorIndex).trim()
@@ -66,6 +66,7 @@ object TestRepositoryParser {
         }
     }
 
+    private const val NOT_FOUND: Int = -1
     private const val ROLE_PACKAGE: String = "package name"
     private const val ROLE_DEPENDENCY: String = "dependency name"
 }

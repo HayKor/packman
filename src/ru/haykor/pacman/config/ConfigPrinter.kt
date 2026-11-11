@@ -19,6 +19,7 @@ object ConfigPrinter {
         "${ConfigKeys.IMAGE_FILE}: ${config.imageFile}",
         "${ConfigKeys.ASCII_TREE}: ${config.asciiTree}",
         "${ConfigKeys.FILTER}: ${renderText(config.filter)}",
+        "${ConfigKeys.LOAD_ORDER}: ${config.loadOrder}",
     )
 
     private fun renderText(value: String): String = if (value.isEmpty()) EMPTY_VALUE else value

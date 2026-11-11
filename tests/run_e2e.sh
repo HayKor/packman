@@ -61,6 +61,7 @@ start_registry() {
 write_registry_config() {
     package_name=$1
     config_path=$2
+    load_order=${3:-false}
     cat >"$config_path" <<EOF
 package: $package_name
 repository: "http://127.0.0.1:$registry_port"
@@ -68,6 +69,7 @@ repository_mode: registry
 image_file: graph.png
 ascii_tree: false
 filter: ""
+load_order: $load_order
 EOF
 }
 
@@ -89,6 +91,16 @@ expect_output stage3-self-cycle tests/expected/stage3-self-cycle.txt \
     --config tests/fixtures/configs/test-self-cycle.yaml
 expect_output stage3-filter tests/expected/stage3-filter.txt \
     --config tests/fixtures/configs/test-filter.yaml
+expect_output stage4-order-linear tests/expected/stage4-order-linear.txt \
+    --config tests/fixtures/configs/test-linear-order.yaml
+expect_output stage4-order-diamond tests/expected/stage4-order-diamond.txt \
+    --config tests/fixtures/configs/test-diamond-order.yaml
+expect_output stage4-order-cycle tests/expected/stage4-order-cycle.txt \
+    --config tests/fixtures/configs/test-cycle-order.yaml
+expect_output stage4-order-filter tests/expected/stage4-order-filter.txt \
+    --config tests/fixtures/configs/test-filter-order.yaml
+expect_output stage4-print-config tests/expected/stage4-print-config.txt \
+    --print-config --config tests/fixtures/configs/registry.yaml
 expect_failure unknown-package 1 "is not declared in the test repository" \
     --config tests/fixtures/configs/test-unknown-package.yaml
 expect_failure invalid-repository 1 "test repository line 2" \
@@ -96,10 +108,13 @@ expect_failure invalid-repository 1 "test repository line 2" \
 
 start_registry
 write_registry_config root-package "$work/registry.yaml"
+write_registry_config root-package "$work/registry-order.yaml" true
 write_registry_config missing-package "$work/missing-package.yaml"
 
 expect_output stage3-registry tests/expected/stage3-registry.txt \
     --config "$work/registry.yaml"
+expect_output stage4-order-registry tests/expected/stage4-order-registry.txt \
+    --config "$work/registry-order.yaml"
 expect_failure registry-not-found 1 "was not found in registry" \
     --config "$work/missing-package.yaml"
 

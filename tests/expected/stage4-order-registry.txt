@@ -1,0 +1,8 @@
+Loading order for root-package@1.0.0 (dependencies first):
+  1. leaf-lib@1.2.0
+  2. other-lib@1.0.5
+  3. shared-lib@2.0.0
+  4. root-package@1.0.0
+Total: 4 packages
+
+Cycles: none

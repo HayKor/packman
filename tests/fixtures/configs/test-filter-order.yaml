@@ -1,0 +1,7 @@
+package: A
+repository: tests/fixtures/repos/filter.graph
+repository_mode: test
+image_file: graph.png
+ascii_tree: false
+filter: "d"
+load_order: true

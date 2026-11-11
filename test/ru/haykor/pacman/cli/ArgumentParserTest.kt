@@ -3,6 +3,7 @@ package ru.haykor.pacman.cli
 import kotlin.test.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertIs
+import kotlin.test.assertTrue
 
 class ArgumentParserTest {
     @Test
@@ -26,6 +27,16 @@ class ArgumentParserTest {
         val result = assertIs<ArgumentsResult.Parsed>(ArgumentParser.parse(arguments))
 
         assertEquals("custom.yaml", result.configPath)
+    }
+
+    @Test
+    fun readsPrintConfigOption() {
+        val result = assertIs<ArgumentsResult.Parsed>(
+            ArgumentParser.parse(listOf("--print-config", "--config", "custom.yaml")),
+        )
+
+        assertEquals("custom.yaml", result.configPath)
+        assertTrue(result.printConfig)
     }
 
     @Test

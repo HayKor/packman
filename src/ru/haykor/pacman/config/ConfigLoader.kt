@@ -45,6 +45,7 @@ class ConfigLoader {
             imageFile = ImageFileValidator.validate(parameters.string(ConfigKeys.IMAGE_FILE)),
             asciiTree = parameters.boolean(ConfigKeys.ASCII_TREE),
             filter = FilterValidator.validate(parameters.string(ConfigKeys.FILTER)),
+            loadOrder = parameters.booleanOrDefault(ConfigKeys.LOAD_ORDER, defaultValue = false),
         )
     }
 

@@ -19,6 +19,7 @@ object HelpText {
         "",
         "Options:",
         "  --config <path>  path to the YAML configuration file (default: config.yaml)",
+        "  --print-config   validate the configuration and print its parameters",
         "  -h, --help       show this help page and exit",
     ).joinToString(separator = "\n")
 }

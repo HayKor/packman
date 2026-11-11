@@ -4,3 +4,4 @@ repository_mode: registry
 image_file: graph.png
 ascii_tree: false
 filter: ""
+load_order: false

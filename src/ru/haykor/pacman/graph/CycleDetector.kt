@@ -5,6 +5,7 @@ package ru.haykor.pacman.graph
  */
 object CycleDetector {
     private const val SEPARATOR: String = " -> "
+    private const val NOT_FOUND: Int = -1
 
     /**
      * Enumerates cycles reachable from the graph nodes.
@@ -68,7 +69,7 @@ object CycleDetector {
         seen: MutableSet<String>,
     ) {
         val startIndex = path.indexOf(nodeId)
-        if (startIndex < 0) {
+        if (startIndex == NOT_FOUND) {
             return
         }
         val cycle = path.subList(startIndex, path.size) + nodeId

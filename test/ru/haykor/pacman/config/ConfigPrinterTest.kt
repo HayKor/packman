@@ -23,6 +23,7 @@ class ConfigPrinterTest {
                 "image_file: graph.png",
                 "ascii_tree: false",
                 "filter: \"\"",
+                "load_order: false",
             ),
             ConfigPrinter.render(config),
         )
@@ -32,6 +33,13 @@ class ConfigPrinterTest {
     fun rendersNonEmptyFilter() {
         val lines = ConfigPrinter.render(config.copy(filter = "test"))
 
-        assertEquals("filter: test", lines.last())
+        assertEquals("filter: test", lines[lines.size - 2])
+    }
+
+    @Test
+    fun rendersLoadOrderFlag() {
+        val lines = ConfigPrinter.render(config.copy(loadOrder = true))
+
+        assertEquals("load_order: true", lines.last())
     }
 }

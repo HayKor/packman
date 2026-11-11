@@ -44,6 +44,16 @@ class ConfigParameters(private val values: Map<String, YamlElement>) {
     }
 
     /**
+     * Reads an optional boolean parameter.
+     *
+     * @param name parameter name.
+     * @param defaultValue value used when the parameter is absent.
+     * @return parsed boolean value or the default.
+     */
+    fun booleanOrDefault(name: String, defaultValue: Boolean): Boolean =
+        if (values.containsKey(name)) boolean(name) else defaultValue
+
+    /**
      * Reads a mandatory boolean parameter.
      *
      * @param name parameter name.
