@@ -1,0 +1,22 @@
+{
+  "name": "shared-lib",
+  "dist-tags": {
+    "latest": "2.0.0"
+  },
+  "versions": {
+    "1.0.0": {
+      "name": "shared-lib",
+      "version": "1.0.0",
+      "dependencies": {
+        "leaf-lib": "^0.9.0"
+      }
+    },
+    "2.0.0": {
+      "name": "shared-lib",
+      "version": "2.0.0",
+      "dependencies": {
+        "leaf-lib": "^1.0.0"
+      }
+    }
+  }
+}

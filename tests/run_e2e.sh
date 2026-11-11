@@ -51,7 +51,7 @@ start_registry() {
         --directory tests/fixtures/npm/registry >"$work/registry.log" 2>&1 &
     registry_pid=$!
     attempts=0
-    while ! curl -fs "http://127.0.0.1:$registry_port/sample-package" >/dev/null 2>&1; do
+    while ! curl -fs "http://127.0.0.1:$registry_port/root-package" >/dev/null 2>&1; do
         attempts=$((attempts + 1))
         [ "$attempts" -lt 50 ] || fail "local registry did not start"
         sleep 0.1
@@ -78,16 +78,29 @@ expect_failure missing-parameter 1 "parameter 'filter' is required" \
     --config tests/fixtures/configs/invalid-missing-filter.yaml
 expect_failure unknown-argument 2 "unknown argument '--unknown'" --unknown
 expect_failure missing-file 1 "does not exist" --config tests/fixtures/configs/missing.yaml
-expect_failure unsupported-test-mode 1 "is not supported yet" \
+
+expect_output stage3-linear tests/expected/stage3-linear.txt \
     --config tests/fixtures/configs/test-linear.yaml
+expect_output stage3-diamond tests/expected/stage3-diamond.txt \
+    --config tests/fixtures/configs/test-diamond.yaml
+expect_output stage3-cycle tests/expected/stage3-cycle.txt \
+    --config tests/fixtures/configs/test-cycle.yaml
+expect_output stage3-self-cycle tests/expected/stage3-self-cycle.txt \
+    --config tests/fixtures/configs/test-self-cycle.yaml
+expect_output stage3-filter tests/expected/stage3-filter.txt \
+    --config tests/fixtures/configs/test-filter.yaml
+expect_failure unknown-package 1 "is not declared in the test repository" \
+    --config tests/fixtures/configs/test-unknown-package.yaml
+expect_failure invalid-repository 1 "test repository line 2" \
+    --config tests/fixtures/configs/test-invalid-repository.yaml
 
 start_registry
-write_registry_config sample-package "$work/registry.yaml"
+write_registry_config root-package "$work/registry.yaml"
 write_registry_config missing-package "$work/missing-package.yaml"
 
-expect_output stage2-direct-dependencies tests/expected/stage2-direct-dependencies.txt \
+expect_output stage3-registry tests/expected/stage3-registry.txt \
     --config "$work/registry.yaml"
-expect_failure stage2-not-found 1 "was not found in registry" \
+expect_failure registry-not-found 1 "was not found in registry" \
     --config "$work/missing-package.yaml"
 
 echo "All end-to-end checks passed"

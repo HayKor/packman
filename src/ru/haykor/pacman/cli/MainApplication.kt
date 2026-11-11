@@ -34,7 +34,7 @@ class MainApplication(
 
     private fun execute(configPath: String): ExitCode = try {
         val config = ConfigLoader().load(configPath)
-        runBlocking { DirectDependenciesCommand(output).execute(config) }
+        runBlocking { GraphCommand(output).execute(config) }
         ExitCode.SUCCESS
     } catch (error: PacmanException) {
         fail(error.message ?: UNKNOWN_FAILURE)

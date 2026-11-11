@@ -1,0 +1,3 @@
+# Invalid: package names must be uppercase.
+a: B
+B:

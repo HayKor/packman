@@ -1,0 +1,6 @@
+package: Z
+repository: tests/fixtures/repos/linear.graph
+repository_mode: test
+image_file: graph.png
+ascii_tree: false
+filter: ""

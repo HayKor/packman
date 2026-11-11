@@ -1,0 +1,6 @@
+# Filter demo: D and the whole subtree behind it must be excluded.
+A: B C
+B: D
+C: D
+D: E
+E:

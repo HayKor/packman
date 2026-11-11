@@ -1,0 +1,11 @@
+Dependency graph for root-package@1.0.0
+Nodes: 4
+Edges: 4
+
+leaf-lib@1.2.0 -> (no dependencies)
+other-lib@1.0.5 -> leaf-lib@1.2.0
+root-package@1.0.0 -> other-lib@1.0.5, shared-lib@2.0.0
+shared-lib@2.0.0 -> leaf-lib@1.2.0
+
+Excluded by filter: none
+Cycles: none

@@ -1,0 +1,10 @@
+Dependency graph for A
+Nodes: 3
+Edges: 3
+
+A -> B
+B -> C
+C -> A
+
+Excluded by filter: none
+Cycles: A -> B -> C -> A

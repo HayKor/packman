@@ -1,0 +1,9 @@
+Dependency graph for A
+Nodes: 2
+Edges: 2
+
+A -> A, B
+B -> (no dependencies)
+
+Excluded by filter: none
+Cycles: A -> A

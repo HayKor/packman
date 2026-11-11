@@ -1,0 +1,16 @@
+{
+  "name": "root-package",
+  "dist-tags": {
+    "latest": "1.0.0"
+  },
+  "versions": {
+    "1.0.0": {
+      "name": "root-package",
+      "version": "1.0.0",
+      "dependencies": {
+        "shared-lib": "^2.0.0",
+        "other-lib": "~1.0.0"
+      }
+    }
+  }
+}

@@ -19,15 +19,14 @@ class MainApplicationTest {
     }
 
     @Test
-    fun reportsTestRepositoryModeAsUnsupported() {
+    fun analysesLinearTestRepository() {
         val arguments = listOf("--config", "tests/fixtures/configs/test-linear.yaml")
         val exitCode = application.run(arguments)
 
-        assertEquals(ExitCode.FAILURE, exitCode)
-        assertEquals(
-            "error: repository_mode 'test' is not supported yet",
-            errorOutput.lines.single(),
-        )
+        assertEquals(ExitCode.SUCCESS, exitCode)
+        assertEquals("Dependency graph for A", output.lines.first())
+        assertTrue(output.lines.contains("A -> B"))
+        assertTrue(errorOutput.lines.isEmpty())
     }
 
     @Test

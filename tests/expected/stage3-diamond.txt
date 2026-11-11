@@ -1,0 +1,11 @@
+Dependency graph for A
+Nodes: 4
+Edges: 4
+
+A -> B, C
+B -> D
+C -> D
+D -> (no dependencies)
+
+Excluded by filter: none
+Cycles: none
